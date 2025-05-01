@@ -145,7 +145,7 @@ class ProductInventory
 
         Console.WriteLine("\nCurrent Inventory:");
         Console.WriteLine("ID\tName\t\tPrice\tQuantity");
-        Console.WriteLine("----------------------------");
+        Console.WriteLine("------------------------------------");
         
         foreach (var item in inventory)
         {
