@@ -1,0 +1,14 @@
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\ProductInventory.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\ProductInventory.AssemblyInfoInputs.cache
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\ProductInventory.AssemblyInfo.cs
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\ProductInventory.csproj.CoreCompileInputs.cache
+C:\Users\USER\Desktop\projects\ProductInventory\bin\Debug\net9.0\ProductInventory.exe
+C:\Users\USER\Desktop\projects\ProductInventory\bin\Debug\net9.0\ProductInventory.deps.json
+C:\Users\USER\Desktop\projects\ProductInventory\bin\Debug\net9.0\ProductInventory.runtimeconfig.json
+C:\Users\USER\Desktop\projects\ProductInventory\bin\Debug\net9.0\ProductInventory.dll
+C:\Users\USER\Desktop\projects\ProductInventory\bin\Debug\net9.0\ProductInventory.pdb
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\ProductInventory.dll
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\refint\ProductInventory.dll
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\ProductInventory.pdb
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\ProductInventory.genruntimeconfig.cache
+C:\Users\USER\Desktop\projects\ProductInventory\obj\Debug\net9.0\ref\ProductInventory.dll
