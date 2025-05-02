@@ -1,184 +1,104 @@
-﻿
-class ProductInventory
+﻿using System;
+using System.Collections.Generic;
+
+public class ProductInventory
 {
-    private Dictionary<string, Product> inventory = new Dictionary<string, Product>();
+    
+    private Dictionary<int, int> inventory = new Dictionary<int, int>();
+    
+    
+    private Dictionary<int, string> productNames = new Dictionary<int, string>();
+    
+    
+    private Dictionary<int, decimal> productPrices = new Dictionary<int, decimal>();
 
-    static void Main(string[] args)
+    
+    public void AddProduct(int productId, string productName, decimal price, int initialQuantity)
     {
-        var system = new ProductInventory();
-        system.Run();
-    }
-
-    public void Run()
-    {
-        Console.WriteLine("Welcome to Avocado Inventory Management System");
-        Console.WriteLine("---------------------------------");
-
-        while (true)
+        if (inventory.ContainsKey(productId))
         {
-            Console.WriteLine("\nMenu:");
-            Console.WriteLine("1. Add Product");
-            Console.WriteLine("2. View Product");
-            Console.WriteLine("3. Update Product Quantity");
-            Console.WriteLine("4. List All Products");
-            Console.WriteLine("5. Remove Product");
-            Console.WriteLine("6. Exit");
-            Console.Write("Enter your choice: ");
-
-            string choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    AddProduct();
-                    break;
-                case "2":
-                    ViewProduct();
-                    break;
-                case "3":
-                    UpdateProductQuantity();
-                    break;
-                case "4":
-                    ListAllProducts();
-                    break;
-                case "5":
-                    RemoveProduct();
-                    break;
-                case "6":
-                    Console.WriteLine("Exiting system...");
-                    return;
-                default:
-                    Console.WriteLine("Invalid choice. Please try again.");
-                    break;
-            }
-        }
-    }
-
-    private void AddProduct()
-    {
-        Console.Write("Enter product ID: ");
-        string id = Console.ReadLine();
-
-        if (inventory.ContainsKey(id))
-        {
-            Console.WriteLine("Product ID already exists!");
-            return;
-        }
-
-        Console.Write("Enter product name: ");
-        string name = Console.ReadLine();
-
-        Console.Write("Enter product price: ");
-        decimal price;
-        while (!decimal.TryParse(Console.ReadLine(), out price) || price <= 0)
-        {
-            Console.Write("Invalid price. Please enter a positive number: ");
-        }
-
-        Console.Write("Enter initial quantity: ");
-        int quantity;
-        while (!int.TryParse(Console.ReadLine(), out quantity) || quantity < 0)
-        {
-            Console.Write("Invalid quantity. Please enter a non-negative number: ");
-        }
-
-        inventory[id] = new Product(name, price, quantity);
-        Console.WriteLine("Product added successfully!");
-    }
-
-    private void ViewProduct()
-    {
-        Console.Write("Enter product ID: ");
-        string id = Console.ReadLine();
-
-        if (inventory.TryGetValue(id, out Product product))
-        {
-            Console.WriteLine($"\nProduct ID: {id}");
-            Console.WriteLine($"Name: {product.Name}");
-            Console.WriteLine($"Price: {product.Price:C}");
-            Console.WriteLine($"Quantity: {product.Quantity}");
+            Console.WriteLine($"Product with ID {productId} already exists.");
         }
         else
         {
-            Console.WriteLine("Product not found!");
+            inventory[productId] = initialQuantity;
+            productNames[productId] = productName;
+            productPrices[productId] = price;
+            Console.WriteLine($"Product '{productName}' added to inventory with {initialQuantity} units.");
         }
     }
 
-    private void UpdateProductQuantity()
+    
+    public void RemoveProduct(int productId)
     {
-        Console.Write("Enter product ID: ");
-        string id = Console.ReadLine();
-
-        if (!inventory.ContainsKey(id))
+        if (inventory.ContainsKey(productId))
         {
-            Console.WriteLine("Product not found!");
-            return;
+            string productName = productNames[productId];
+            inventory.Remove(productId);
+            productNames.Remove(productId);
+            productPrices.Remove(productId);
+            Console.WriteLine($"Product '{productName}' (ID: {productId}) removed from inventory.");
         }
-
-        Console.Write("Enter quantity change (use + or - to adjust): ");
-        int change;
-        while (!int.TryParse(Console.ReadLine(), out change))
+        else
         {
-            Console.Write("Invalid input. Please enter a whole number: ");
+            Console.WriteLine($"Product with ID {productId} not found in inventory.");
         }
-
-        Product product = inventory[id];
-        int newQuantity = product.Quantity + change;
-
-        if (newQuantity < 0)
-        {
-            Console.WriteLine("Cannot set quantity below 0. Setting to 0.");
-            newQuantity = 0;
-        }
-
-        product.Quantity = newQuantity;
-        Console.WriteLine($"Quantity updated. New quantity: {newQuantity}");
     }
 
-    private void ListAllProducts()
+    public void UpdateQuantity(int productId, int newQuantity)
     {
-        if (inventory.Count == 0)
+        if (inventory.ContainsKey(productId))
         {
-            Console.WriteLine("No products in inventory.");
-            return;
+            inventory[productId] = newQuantity;
+            Console.WriteLine($"Quantity for product ID {productId} updated to {newQuantity}.");
         }
+        else
+        {
+            Console.WriteLine($"Product with ID {productId} not found in inventory.");
+        }
+    }
 
+    public void DisplayInventory()
+    {
         Console.WriteLine("\nCurrent Inventory:");
-        Console.WriteLine("ID\tName\t\tPrice\tQuantity");
-        Console.WriteLine("----------------------------");
+        Console.WriteLine("--------------------------------------------------");
+        Console.WriteLine("ID\tName\t\tPrice\t\tQuantity");
+        Console.WriteLine("--------------------------------------------------");
         
-        foreach (var item in inventory)
+        foreach (var kvp in inventory)
         {
-            Console.WriteLine($"{item.Key}\t{item.Value.Name}\t{item.Value.Price:C}\t{item.Value.Quantity}");
+            int productId = kvp.Key;
+            Console.WriteLine($"{productId}\t{productNames[productId]}\t\t{productPrices[productId]:C}\t\t{kvp.Value}");
         }
+        
+        Console.WriteLine("--------------------------------------------------\n");
     }
 
-    private void RemoveProduct()
+    
+    public int GetQuantity(int productId)
     {
-        Console.Write("Enter product ID to remove: ");
-        string id = Console.ReadLine();
-
-        if (inventory.Remove(id))
+        if (inventory.ContainsKey(productId))
         {
-            Console.WriteLine("Product removed successfully.");
+            return inventory[productId];
+        }
+        return -1; 
+    }
+
+    
+    public void GetProductInfo(int productId)
+    {
+        if (inventory.ContainsKey(productId))
+        {
+            Console.WriteLine($"Product ID: {productId}");
+            Console.WriteLine($"Name: {productNames[productId]}");
+            Console.WriteLine($"Price: {productPrices[productId]:C}");
+            Console.WriteLine($"Quantity in stock: {inventory[productId]}");
         }
         else
         {
-            Console.WriteLine("Product not found!");
+            Console.WriteLine($"Product with ID {productId} not found in inventory.");
         }
     }
 }
 
-class Product
-{
-    public string Name { get; set; }
-    public decimal Price { get; set; }
-    public int Quantity { get; set; }
 
-    public Product(string name, decimal price, int quantity)
-    {
-        Name = name;
-        Price = price;
-        Quantity = quantity;
-    }
-}
